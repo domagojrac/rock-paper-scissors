@@ -1,6 +1,51 @@
+var buttons = document.querySelectorAll("button");
+var results = document.querySelector(".results");
+
+let userScore = document.getElementById("userScore").innerHTML;
+let compScore = document.getElementById("compScore").innerHTML;
+
+buttons.forEach(button => {
+    button.addEventListener("click", (e) =>{
+        const computerChoice = getComputerChoice();
+        var result = playRound(button.id, computerChoice);
+        
+        if(result == "You win! Rock beats scissors!" || result == "You win! Paper beats rock!" || result == "You win! Scissors beats paper!") {
+            userScore++;
+            document.getElementById("userScore").innerHTML = userScore;    
+
+        };
+
+        if(result == "You lose! Rock beats scissors!" || result == "You lose! Paper beats rock!" || result == "You lose! Scissors beats paper!") {
+            compScore++;
+            document.getElementById("compScore").innerHTML = compScore;
+        };
+
+        document.getElementById("result").innerHTML = result;
+
+        if(userScore == 5) {
+            document.getElementById("result").innerHTML = "Bravooo!";
+            document.getElementById("userScore").innerHTML = 0;
+            document.getElementById("compScore").innerHTML = 0;
+            userScore = 0;
+            compScore = 0;
+        }
+
+        if(compScore == 5) {
+            document.getElementById("result").innerHTML = "Neee, glupi kompjuter je pobijedio!!";
+            document.getElementById("userScore").innerHTML = 0;
+            document.getElementById("compScore").innerHTML = 0;
+            userScore = 0;
+            compScore = 0;
+        }
+    });
+});
+
+
+
+
+
 function getComputerChoice() {
     let x = Math.floor(Math.random() * 3) + 1;
-
     let computerChoice;  
 
     switch(x) {
@@ -17,12 +62,9 @@ function getComputerChoice() {
     return computerChoice;
 }
 
-function playRound(playerSelection) {
-    let cleanPlayerSelection = playerSelection.toLowerCase();
+function playRound(playerSelection, computerSelection) {
 
-    computerSelection = getComputerChoice();
-
-    if(cleanPlayerSelection == "rock") {
+    if(playerSelection == "Rock") {
         switch(computerSelection) {
             case "Rock":
                 return "No winner! You both chose rock!";
@@ -36,7 +78,7 @@ function playRound(playerSelection) {
         }
     }
 
-    if(cleanPlayerSelection == "paper") {
+    if(playerSelection == "Paper") {
         switch(computerSelection) {
             case "Paper":
                 return "No winner! You both chose paper!";
@@ -50,7 +92,7 @@ function playRound(playerSelection) {
         }
     }
 
-    if(cleanPlayerSelection == "scissors") {
+    if(playerSelection == "Scissors") {
         switch(computerSelection) {
             case "Scissors":
                 return "No winner! You both chose scissors!";
